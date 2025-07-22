@@ -87,6 +87,14 @@ I_{n\kappa}(k) = \int_0^\infty dr \, ...
 
 ---
 
+## 1️⃣ units_audit.py
+	•	📏 What it does: Checks for unit consistency in equations and text (e.g., mixing SI with CGS units, or ambiguous custom units).
+	•	✅ Flags:
+	•	--check-consistency to verify all units are in a single system (SI, CGS, etc.)
+	•	--flag-custom for author-defined units like “arb. units.”
+	•	🧠 Few-shot would teach it that “eV” is valid, but “MeV/c^2” in a length equation isn’t.
+
+
 
 
 ## CLI Flags
