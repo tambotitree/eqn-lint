@@ -119,7 +119,16 @@ python bin/citation_audit.py -f test/LambShiftGA.tex
 🔍 Citation Check Result:
 ✅ DEFINED: \cite{Schrodinger1930,Hestenes1990} appears correctly.
 ```
+---
 
+### 📝 `context_audit.py`
+Checks if each citation’s surrounding text accurately reflects the cited work.
+
+#### Example:
+```bash
+python bin/context_audit.py -f test/LambShiftGA.tex
+
+---
 
 ## CLI Flags
 
