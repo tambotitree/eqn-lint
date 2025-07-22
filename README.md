@@ -95,6 +95,30 @@ I_{n\kappa}(k) = \int_0^\infty dr \, ...
 	•	🧠 Few-shot would teach it that “eV” is valid, but “MeV/c^2” in a length equation isn’t.
 
 
+## 📑 Citation Audit
+
+Run a check to verify that all citations in your LaTeX file are defined in the bibliography and not fabricated.
+
+🧹 Dry Run:
+```bash
+python bin/citation_audit.py -f test/LambShiftGA.tex --dry-run
+
+🔍 Full Audit:
+
+python bin/citation_audit.py -f test/LambShiftGA.tex
+
+### Sample Output:
+```
+--- Citation 1 ---
+\cite{Hestenes1990}
+🔍 Citation Check Result:
+✅ DEFINED: \cite{Hestenes1990} appears correctly.
+
+--- Citation 4 ---
+\cite{Schrodinger1930,Hestenes1990}
+🔍 Citation Check Result:
+✅ DEFINED: \cite{Schrodinger1930,Hestenes1990} appears correctly.
+```
 
 
 ## CLI Flags
