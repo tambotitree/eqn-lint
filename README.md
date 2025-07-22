@@ -49,6 +49,25 @@ python bin/dimensional_audit.py -f test/LambShiftGA.tex
 python bin/symbolic_audit.py -f test/LambShiftGA.tex
 
 ---
+## eqn-lint.py
+
+# Run all audits
+python eqn-lint.py check -f test/LambShiftGA.tex
+
+# Skip prose and units audits
+python eqn-lint.py check -f test/LambShiftGA.tex --skip prose,units
+
+# Create submission package
+python eqn-lint.py package -f test/LambShiftGA.tex
+
+# Rate the paper
+python eqn-lint.py rate
+
+# Show help
+python eqn-lint.py help
+
+---
+
 
 ## 🛠️ Run All Audits: `audit_all.py`
 
