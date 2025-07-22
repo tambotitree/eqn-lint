@@ -148,6 +148,23 @@ python bin/context_audit.py -f test/LambShiftGA.tex
 
 ---
 
+📝 prose_audit.py
+
+Checks for clarity, conciseness, and jargon in the prose of LaTeX papers. Highlights overly technical or verbose paragraphs and suggests simpler alternatives.
+
+📖 What it does:
+	•	✅ Flags dense “PhD-speak” and recommends plain-English rewrites.
+	•	✅ Detects typos and formatting issues in text sections.
+	•	✅ Skips LaTeX boilerplate (preambles, equations).
+	•	✅ Provides a summary report of clear vs. unclear paragraphs.
+
+🚀 Usage
+
+python bin/prose_audit.py -f path/to/paper.tex
+
+---
+
+
 ## CLI Flags
 
 Flag|Description
