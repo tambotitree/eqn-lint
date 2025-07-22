@@ -49,6 +49,24 @@ python bin/dimensional_audit.py -f test/LambShiftGA.tex
 python bin/symbolic_audit.py -f test/LambShiftGA.tex
 
 ---
+
+## 🛠️ Run All Audits: `audit_all.py`
+
+Run all available audits on your LaTeX paper in one go. This will sequentially execute:  
+- 📐 Dimensional Audit  
+- 🧠 Symbolic Audit  
+- 👁 Opacity Audit  
+- ⚖️ Units Audit  
+- 📖 Citation Audit  
+- 📝 Context Audit  
+
+### 📦 Usage
+
+```bash
+python bin/audit_all.py -f test/LambShiftGA.tex
+
+---
+
 ## 🕵️‍♂️ Opacity Audit
 
 The opacity_audit.py tool scans LaTeX papers for undefined symbols in equations and their surrounding context.
