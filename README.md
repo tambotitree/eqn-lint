@@ -49,6 +49,44 @@ python bin/dimensional_audit.py -f test/LambShiftGA.tex
 python bin/symbolic_audit.py -f test/LambShiftGA.tex
 
 ---
+## 🕵️‍♂️ Opacity Audit
+
+The opacity_audit.py tool scans LaTeX papers for undefined symbols in equations and their surrounding context.
+It helps authors avoid “opaque” notation by identifying symbols, acronyms, or notations that are used but never explained.
+
+✅ Features
+	•	Detects undefined symbols in equations.
+	•	Recognizes common physics notations and skips flagging them (e.g., $c$ for speed of light).
+	•	Suggests clear definitions for missing symbols.
+	•	CLI tool for easy batch processing.
+
+🧪 Quick Example
+
+Run an opacity audit on a LaTeX file:
+
+python bin/opacity_audit.py -f test/LambShiftGA.tex
+
+```
+Sample Output:
+--- Equation 3 ---
+$r$
+🔍 Opacity Check Result:
+❌ UNDEFINED SYMBOLS: 
+
+1. $I_{n\kappa}(k)$ appears in the equation but is not defined in the nearby text. Consider defining it.  
+2. $P_{n\kappa}(r)$ and $Q_{n\kappa}(r)$ are missing definitions. Suggest: "Radial wave functions."  
+3. $k$ is undefined. Suggest: "Wave number."  
+
+--- Equation 6 ---
+\begin{equation}
+I_{n\kappa}(k) = \int_0^\infty dr \, ...
+\end{equation}
+🔍 Opacity Check Result:
+✅ ALL SYMBOLS DEFINED: No undefined symbols found.
+```
+
+---
+
 
 
 ## CLI Flags
