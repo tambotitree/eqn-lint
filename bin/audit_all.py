@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/env python3
 # ================================================================
 # eqn-lint: Run All Audits for LaTeX Papers
 # Copyright (c) 2024 John Ryan
@@ -10,6 +10,12 @@ import sys
 import os
 import glob
 import argparse
+
+from pathlib import Path
+HERE = Path(__file__).resolve().parent              # .../eqn-lint/bin
+AUDIT_DIR = HERE                                    # audits live in the same dir as this script
+# If you actually keep them in eqn-lint/bin, leave as-is; otherwise point to a sibling:
+# AUDIT_DIR = HERE  # or: HERE.parent / "audits"
 
 def main():
     parser = argparse.ArgumentParser(description="Run all eqn-lint audits on a LaTeX file")
@@ -26,19 +32,24 @@ def main():
     if not os.path.isfile(tex_file):
         sys.exit(f"❌ ERROR: File {tex_file} not found.")
 
-    audit_scripts = sorted(glob.glob("./bin/*_audit.py"))
-
+    audit_scripts = sorted(str(p) for p in AUDIT_DIR.glob("*_audit.py"))
+    if not audit_scripts:
+        print(f"❌ ERROR: No *_audit.py scripts found in {AUDIT_DIR}")
+        sys.exit(1)
+    
     if args.skip:
         audit_scripts = [s for s in audit_scripts if os.path.basename(s) not in args.skip]
 
+    # (list may be filtered by --skip; if it empties, just exit cleanly)
     if not audit_scripts:
-        sys.exit("❌ ERROR: No *_audit.py scripts found in ./bin/")
+        print("ℹ️ All requested audits were skipped.")
+        return
 
     print(f"📄 Running all audits on: {tex_file}\n")
 
     for script in audit_scripts:
         print(f"🚀 Running {os.path.basename(script)}...")
-        cmd = ["python", script, "-f", tex_file] + extra_args
+        cmd = ["python3", script, "-f", tex_file] + extra_args
         try:
             subprocess.run(cmd, check=True)
             print(f"✅ Completed {os.path.basename(script)}\n")
