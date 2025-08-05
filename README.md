@@ -1,4 +1,4 @@
-# eqn-lint
+# eqnlint
 
 🔬 *Lint for LaTeX math and physics papers*.  
 It checks equations for **dimensional consistency** and **symbolic algebra consistency** using AI.  
