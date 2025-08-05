@@ -4,10 +4,10 @@ import sys, os, json
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1] / "lib"))
 
-from _cli import base_parser, info_block, write_outputs
-from _textio import read_text, emit_human, emit_json
-from _extract import extract_equations_with_context
-from _ai import AIClient
+from eqnlint.lib._cli import base_parser, info_block, write_outputs
+from eqnlint.lib._textio import read_text, emit_human, emit_json
+from eqnlint.lib._extract import extract_equations_with_context
+from eqnlint.lib._ai import AIClient
 
 AUDIT = "dimensional"
 SUMMARY = "Checks SI dimensional consistency of each extracted equation."
