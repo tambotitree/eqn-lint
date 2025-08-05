@@ -1,6 +1,8 @@
 # lib/_ai.py
 import os, json
 from ._budget import RateLimiter
+from dotenv import load_dotenv
+load_dotenv()
 
 class AIClient:
     def __init__(self, model, rate=0.5, max_tokens=1200):
@@ -29,7 +31,13 @@ class AIClient:
             temperature=0,
             max_tokens=self.max_tokens
         )
-        return resp.choices[0].message.content
+        # return resp.choices[0].message.content
+        content = resp.choices[0].message.content.strip()
+        if content.startswith("```json"):
+            content = content.removeprefix("```json").removesuffix("```").strip()
+        elif content.startswith("```"):
+            content = content.removeprefix("```").removesuffix("```").strip()
+        return content
 
     def _ollama(self, system, user, fewshot):
         import requests
@@ -42,4 +50,11 @@ class AIClient:
         for line in r.iter_lines(decode_unicode=True):
             if not line: continue
             out.append(json.loads(line)["response"])
-        return "".join(out)
+        # return "".join(out)
+        content = "".join(out).strip()
+        if content.startswith("```json"):
+            content = content.removeprefix("```json").removesuffix("```").strip()
+        elif content.startswith("```"):
+            content = content.removeprefix("```").removesuffix("```").strip()
+        return content
+

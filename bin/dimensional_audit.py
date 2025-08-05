@@ -24,13 +24,22 @@ def main():
     p = base_parser("Dimensional Audit", AUDIT)
     args = p.parse_args()
 
+    from eqnlint.lib import _debug
+    _debug.set_level(args.verbose)
+    log = _debug.logger
+
     if args.help_info:
         print(info_block(AUDIT, SUMMARY, INPUTS, OUTPUTS, STEPS))
         sys.exit(0)
 
     tex = read_text(args.file)
+    log.debug(f"Loaded file: {args.file}")
+
     eqs = extract_equations_with_context(tex)
+    log.debug(f"Found {len(eqs)} equations.")
+
     if args.dry_run:
+        log.info("Dry run mode: extracting equations only.")
         human = emit_human("=== DRY RUN: Equations ===",
                            [f"\n--- Equation {i+1} ---\n{e['equation']}\n\n{e['context']}"
                             for i,e in enumerate(eqs)])
@@ -39,10 +48,10 @@ def main():
 
     ai = AIClient(args.model, rate=args.rate, max_tokens=args.max_tokens)
     system = "You are a rigorous SI dimensional analysis assistant. Be strict and concise."
-    # Load few-shot if you like from prompts/dimensional.yaml (omitted here)
 
     results=[]
     for i,e in enumerate(eqs,1):
+        log.debug(f"Sending Equation {i} to model...")
         user = f"""Equation:
 {e['equation']}
 
@@ -52,17 +61,20 @@ Context:
 Task: List symbols with their likely SI dimensions; check both sides match.
 Return JSON with keys: verdict ("CONSISTENT"/"INCONSISTENT"), notes (short), symbols (dict)."""
         try:
+            log.debug(f"Calling ai.complete() for Equation {i}...")
             txt = ai.complete(system, user)
-            # accept raw JSON or short text; be robust:
+            log.debug(f"Raw response from model:\n{txt}")
             try:
                 obj = json.loads(txt)
+                log.debug(f"Parsed verdict for Equation {i}: {obj.get('verdict','?')}")
             except Exception:
+                log.warning(f"Failed to parse JSON for Equation {i}, using fallback.")
                 obj = {"verdict": "UNKNOWN", "notes": txt.strip(), "symbols": {}}
         except Exception as ex:
+            log.error(f"Model call failed for Equation {i}: {ex}")
             obj = {"verdict":"ERROR","notes":str(ex),"symbols":{}}
         results.append({"index":i, "equation":e["equation"], **obj})
 
-    # Human log
     lines=[]
     for r in results:
         lines.append(f"\n--- Equation {r['index']} ---\n{r['equation']}\n"
