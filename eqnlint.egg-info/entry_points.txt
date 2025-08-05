@@ -1,0 +1,2 @@
+[console_scripts]
+dimensional-audit = eqnlint.bin.dimensional_audit:main
