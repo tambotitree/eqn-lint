@@ -1,4 +1,4 @@
-# eqn-lint
+# eqnlint
 
 🔬 *Lint for LaTeX math and physics papers*.  
 It checks equations for **dimensional consistency** and **symbolic algebra consistency** using AI.  
@@ -17,7 +17,7 @@ Perfect for scientists, reviewers, and journals.
 ## Install
 ```bash
 git clone https://github.com/YOURNAME/eqn-lint.git
-cd eqn-lint
+cd eqnlint
 pip install -r requirements.txt
 
 ---
