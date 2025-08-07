@@ -14,3 +14,14 @@ def emit_human(header, items):
 
 def emit_json(**kwargs):
     return kwargs
+
+def write_outputs(human_log, json_obj, output_path, json_path):
+    if output_path:
+        write_text(output_path, human_log)
+    else:
+        print(human_log)
+
+    if json_path:
+        write_text(json_path, json.dumps(json_obj, indent=2))
+    else:
+        print(json.dumps(json_obj, indent=2))

@@ -33,9 +33,3 @@ Outputs:
 Steps:
 {steps}
 """
-
-def write_outputs(human_text, json_obj, out_path, json_path):
-    if out_path:
-        pathlib.Path(out_path).write_text(human_text, encoding="utf-8")
-    if json_path:
-        pathlib.Path(json_path).write_text(json.dumps(json_obj, indent=2), encoding="utf-8")
