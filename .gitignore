@@ -2,6 +2,7 @@
 build/
 dist/
 *.egg-info/
+eqnlint.egg-info/
 
 # Bytecode
 __pycache__/
