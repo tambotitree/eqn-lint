@@ -1,4 +1,16 @@
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Bytecode
 __pycache__/
+*.pyc
+
+# Logs & envs
 *.log
 .env
-*.pyc
+.venv/
+build/
+dist/
+*.egg-info
