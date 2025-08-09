@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eqnlint"
+version = "0.1.0"
+description = "A scientific equation auditing tool"
+authors = [
+    { name="John Ryan", email="john.l.ryan@mac.com" }
+]
+dependencies = [
+    # Add your actual runtime dependencies here
+    "openai",
+    "sympy",
+    "tqdm",
+    "rich",
+]
+
+[project.scripts]
+eqnlint = "eqnlint.bin.eqnlint:main"
+audit-units = "eqnlint.bin.units_audit:main"
+audit-symbolic = "eqnlint.bin.symbolic_audit:main"
+audit-context = "eqnlint.bin.context_audit:main"
+audit-prose = "eqnlint.bin.prose_audit:main"
+audit-citation = "eqnlint.bin.citation_audit:main"
+
+[tool.setuptools]
+packages = ["eqnlint", "eqnlint.bin", "eqnlint.lib"]
