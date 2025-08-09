@@ -29,7 +29,7 @@ jobs:
       - name: Build sdist and wheel
         run: python -m build
 
-      - name: Publish to PyPI
+      - name: Publish eqnlint to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           print-hash: true  # optional nice-to-have
