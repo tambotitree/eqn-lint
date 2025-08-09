@@ -17,3 +17,4 @@ __pycache__/
 
 # Packaging
 .DS_Store
+eqnlint.egg-info/
