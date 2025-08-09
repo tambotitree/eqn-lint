@@ -4,18 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "eqnlint"
-version = "0.1.0"
+version = "0.1.1"
 description = "Audits LaTeX papers for units, dimensions, symbols, citations, context, opacity, and prose."
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.9"
 authors = [
-  { name = "John Ryan", email = "john.l.ryan@mac.com" }
+  { name = "John Ryan", email = "tambotitree@gmail.com" }
 ]
 keywords = ["latex", "audit", "linter", "units", "dimensions", "citations", "prose"]
 classifiers = [
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Topic :: Text Processing :: Markup :: LaTeX",
   "Intended Audience :: Science/Research",
