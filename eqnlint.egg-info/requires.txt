@@ -1,4 +1,0 @@
-openai
-sympy
-tqdm
-rich
