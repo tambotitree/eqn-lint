@@ -6,6 +6,8 @@ build/
 # Bytecode
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
 # Logs & envs
 *.log
@@ -14,3 +16,8 @@ __pycache__/
 build/
 dist/
 *.egg-info
+
+# Packaging artifacts
+build/
+dist/
+*.egg-info/
