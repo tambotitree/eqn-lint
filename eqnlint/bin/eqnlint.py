@@ -2,46 +2,44 @@
 """
 eqnlint.py — Run all available audits sequentially.
 
-This script scans eqnlint/bin for *_audit.py modules and runs their `main()` functions
-in order. All command-line args are passed through unchanged.
+Finds eqnlint/bin/*_audit.py and runs their main() in order.
+All other CLI args are passed through to each audit.
 """
 
 import sys
-import pkgutil
+import argparse
 import importlib
 from pathlib import Path
+from eqnlint import __version__
 
 def main():
-    # Path to bin/ directory
-    bin_dir = Path(__file__).resolve().parent
+    # Provide --version at the top-level without consuming other args.
+    top = argparse.ArgumentParser(add_help=False)
+    top.add_argument("--version", action="version", version=f"eqnlint {__version__}")
+    top.parse_known_args()  # don’t eat the rest; audits will parse them
 
-    # Find *_audit.py files
-    audits = [
+    bin_dir = Path(__file__).resolve().parent
+    audits = sorted(
         f.stem for f in bin_dir.glob("*_audit.py")
         if f.is_file() and not f.stem.startswith("_")
-    ]
-
-    # Sort for consistent run order
-    audits.sort()
+    )
 
     print(f"Running all audits: {', '.join(audits)}\n")
 
     exit_code = 0
-    for audit in audits:
-        print(f"=== Running {audit} ===")
+    for name in audits:
+        print(f"=== Running {name} ===")
         try:
-            # import eqnlint.bin.<audit>
-            mod = importlib.import_module(f"eqnlint.bin.{audit}")
+            mod = importlib.import_module(f"eqnlint.bin.{name}")
             if hasattr(mod, "main"):
-                mod.main()
+                mod.main()  # each audit uses base_parser(), which already has --version
             else:
-                print(f"[WARN] {audit} has no main() function, skipping.")
+                print(f"[WARN] {name} has no main(), skipping.")
         except SystemExit as e:
-            # capture exit codes from audit scripts
             if e.code not in (0, None):
                 exit_code = e.code
         except Exception as e:
-            print(f"[ERROR] {audit} failed: {e}")
+            print(f"[ERROR] {name} failed: {e}")
             exit_code = 1
 
     sys.exit(exit_code)

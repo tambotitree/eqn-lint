@@ -1,9 +1,25 @@
 # lib/_cli.py
 import argparse, json, sys, pathlib
 
+# NEW: pull package version; fallback if missing
+try:
+    from .. import __version__
+except Exception:  # pragma: no cover
+    __version__ = "0.0.0"
+
 def base_parser(description, audit_name, extra_args=None):
-    p = argparse.ArgumentParser(description=description,
-                                formatter_class=argparse.RawTextHelpFormatter)
+    p = argparse.ArgumentParser(
+        description=description,
+        formatter_class=argparse.RawTextHelpFormatter
+    )
+
+    # NEW: standard --version flag (works for all entry points using base_parser)
+    p.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {__version__}"
+    )
+
     p.add_argument("-f","--file", required=True, help="Input LaTeX file")
     p.add_argument("-o","--output", help="Write human log to file")
     p.add_argument("--json", help="Write machine-readable JSON to file")
@@ -14,7 +30,11 @@ def base_parser(description, audit_name, extra_args=None):
     p.add_argument("-v", "--verbose", action="store_true", help="Enable verbose logging")
     p.add_argument("--help-info", action="store_true",
                    help="Print Info Section for pipeline probing and exit")
-    if extra_args: [p.add_argument(*a[0], **a[1]) for a in extra_args]
+
+    if extra_args:
+        for flags, kwargs in extra_args:
+            p.add_argument(*flags, **kwargs)
+
     p.set_defaults(_audit_name=audit_name)
     return p
 

@@ -57,4 +57,5 @@ include = ["eqnlint*"]
 fallback_version = "0.0.0"
 version_scheme = "guess-next-dev"
 local_scheme = "node-and-date"
+write_to = "eqnlint/_version.py"
 # If you prefer PEP 440 pre-releases like 0.3.0rc1, just tag 'v0.3.0rc1'

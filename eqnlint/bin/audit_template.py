@@ -230,7 +230,7 @@ class AuditStateMachine:
         self.log.debug(f"[STATE] Transitioning to {self.state.name}")
     
     def _output_results(self):
-        lines = [f"\n--- Equation {i+1} ---\n{r['equation']}\n{r['notes']}" for i, r in enumerate(self.results)]
+        lines = [f"\n--- Target {i+1} ---\n{r['equation']}\n{r['notes']}" for i, r in enumerate(self.results)]
         human = emit_human(f"=== {self.args._audit_name.title()} Audit ===", lines)
         json_obj = emit_json(audit=self.args._audit_name, results=self.results)
         write_outputs(human, json_obj, self.args.output, self.args.json)

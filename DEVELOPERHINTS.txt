@@ -1,0 +1,143 @@
+==================================================
+DEVELOPERHINTS.txt — eqnlint quick cheat sheet
+==================================================
+
+Project basics
+--------------
+- Language: Python 3.9+
+- Packaging: pyproject + setuptools + setuptools-scm
+- Versioning: Git tags drive package version strings
+- CI publish: GitHub Actions + PyPI Trusted Publishers
+
+Local dev install
+-----------------
+# Create a virtual env (recommended)
+python -m venv .venv
+source .venv/bin/activate
+
+# Install project in editable mode + build tools
+pip install -U pip
+pip install -e .[dev]  # if we add extras later; for now:
+pip install -e .
+
+# Run the main CLI
+eqnlint -h
+
+Where the version comes from
+----------------------------
+- No hardcoded __version__.
+- setuptools-scm reads Git metadata.
+- Examples:
+  - On an untagged commit:  0.2.3.dev0+g<hash>.dYYYYMMDD
+  - On a tag v0.3.0:        0.3.0
+
+Check the version Python sees:
+python -c "import eqnlint; print(eqnlint.__version__)"
+
+Releasing a new version (tag-driven)
+------------------------------------
+1) Make sure main is clean and pushed.
+2) Choose the version (PEP 440 compliant), e.g. v0.2.4
+3) Tag and push:
+
+git tag -a v0.2.4 -m "Release 0.2.4"
+git push origin v0.2.4
+
+That’s it. The GitHub Action will:
+- Build sdist + wheel
+- Publish to PyPI via Trusted Publishers
+
+(If CI is configured on tag push; see .github/workflows/publish.yml)
+
+Build locally (optional)
+------------------------
+python -m pip install build
+python -m build
+# Outputs in ./dist/
+
+Install the built wheel locally:
+pip install dist/eqnlint-*.whl
+
+PyPI / Trusted Publishers (once per repo)
+-----------------------------------------
+- On PyPI: add a "Trusted Publisher" for this GitHub repo.
+- In repo: ensure .github/workflows/publish.yml exists and listens on tag pushes.
+- No API token needed in secrets.
+
+Common CLI examples
+-------------------
+# Basic run on a LaTeX file
+eqnlint -f paper.tex -o lint.log
+
+# Slow the request rate (requests/sec)
+eqnlint -f paper.tex --rate 0.2 -o lint.log
+
+# Dry run (just extraction)
+eqnlint -f paper.tex --dry-run -o extract.log
+
+# JSON output (alongside human log)
+eqnlint -f paper.tex -o lint.log --json lint.json
+
+Environment & keys
+------------------
+- OpenAI key is read from env:
+  export OPENAI_API_KEY=sk-...
+
+- Dotenv supported if present (.env):
+  OPENAI_API_KEY=sk-...
+
+Async / networking notes
+------------------------
+- The async client is persistent and closed cleanly on shutdown.
+- If you ever see “Event loop is closed” at teardown, make sure you’re on a recent commit; we handle:
+  - rate limiting (async-safe)
+  - graceful aclose/close fallback for OpenAI SDK
+- For local Ollama instead of OpenAI:
+  pass model like: --model "ollama:llama3"
+  ensure Ollama API is running: http://localhost:11434
+
+LaTeX gotchas we hit (paper writing)
+------------------------------------
+- natbib option clash: load natbib only once; revtex loads it.
+- hyperref should be loaded after most packages, and with revtex it’s often already handled.
+- Non-ASCII in .tex/.bib can break older tools; we have a `clean_ascii.sh` pattern if needed.
+- For bib issues, run:
+  latexmk -C && latexmk -pdf main.tex
+  and inspect main.aux / main.blg for missing keys.
+
+Repo hygiene
+------------
+- .gitignore covers: build/, dist/, *.egg-info/, __pycache__/, *.pyc
+- Don’t commit secrets, .env, or large artifacts.
+
+Changelog (lightweight)
+-----------------------
+- Keep a terse CHANGELOG.md:
+  - Added / Fixed / Changed / Internal
+- Update just before tagging.
+
+Testing changes end-to-end
+--------------------------
+1) Run eqnlint on a small test .tex:
+   eqnlint -f test/test_paper.tex -o test_paper.log --rate 0.2
+
+2) If modifying extraction, toggle --dry-run to inspect what we parse.
+
+3) If modifying prompts/few-shots, keep examples short and categorical.
+
+Bumping versions WITHOUT editing files
+--------------------------------------
+- No manual edits to pyproject or __init__ for version.
+- Just tag and push:
+  git tag -a vX.Y.Z -m "Release X.Y.Z"
+  git push origin vX.Y.Z
+
+Contact / quick checklist before release
+----------------------------------------
+[ ] Tests pass locally (if/when we add them)
+[ ] Lint log on a sample .tex looks sane
+[ ] README updated if flags/CLI changed
+[ ] Tag pushed (see “Releasing a new version”)
+[ ] Watch the GitHub Action finish green
+
+End of file.
