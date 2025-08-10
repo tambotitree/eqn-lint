@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "eqnlint"
-version = "0.2.0"
+version = "0.2.1"
 description = "Audits LaTeX papers for units, dimensions, symbols, citations, context, opacity, and prose."
 readme = "README.md"
 license = "MIT"
