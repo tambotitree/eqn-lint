@@ -1,10 +1,14 @@
+# We use a dynamic versioning system to update ther version do:
+# git tag -a v0.2.1 -m "Release 0.2.1"
+# git push origin v0.2.1
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=61.0", "wheel", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
+
 
 [project]
 name = "eqnlint"
-version = "0.2.1"
+dynamic = ["version"]
 description = "Audits LaTeX papers for units, dimensions, symbols, citations, context, opacity, and prose."
 readme = "README.md"
 license = "MIT"
@@ -27,6 +31,7 @@ dependencies = [
   "sympy",
   "tqdm",
   "rich",
+  "python-dotenv",
 ]
 
 [project.urls]
@@ -46,3 +51,10 @@ audit-dimensional  = "eqnlint.bin.dimensional_audit:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["eqnlint*"]
+
+[tool.setuptools_scm]
+# Optional tweaks:
+fallback_version = "0.0.0"
+version_scheme = "guess-next-dev"
+local_scheme = "node-and-date"
+# If you prefer PEP 440 pre-releases like 0.3.0rc1, just tag 'v0.3.0rc1'
