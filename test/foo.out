@@ -1,0 +1,194 @@
+Running all audits: citation_audit, context_audit, dimensional_audit, opacity_audit, prose_audit, symbolic_audit, units_audit
+
+=== Running citation_audit ===
+{
+  "audit": "template",
+  "results": [
+    {
+      "equation": "\\cite{Einstein1905,Bohm1952,FakeCitation2024}",
+      "notes": "\u274c UNDEFINED"
+    },
+    {
+      "equation": "\\cite{Vaswani2017,SpeciousAgent2025}",
+      "notes": "\u274c UNDEFINED"
+    }
+  ]
+}
+debugging _output_results
+=== Running context_audit ===
+{
+  "audit": "template",
+  "results": [
+    {
+      "equation": "\\cite{Einstein1905,Bohm1952,FakeCitation2024}",
+      "notes": "\u2705 ACCURATE: The citation \\cite{Einstein1905} refers to Einstein's work on the theory of relativity, which is foundational to the concepts of mass-energy equivalence. While the context of the claim is unconventional, the citation itself is relevant to the discussion of mass-energy equivalence."
+    },
+    {
+      "equation": "\\cite{Einstein1905,Bohm1952,FakeCitation2024}",
+      "notes": "\u274c INACCURATE: The citation \\cite{Bohm1952} does not support the claim made in the context regarding dimensional analysis or the explanation of the anomalous Lamb shift without quantum electrodynamics or relativity. Bohm's work primarily focuses on quantum mechanics and interpretations thereof, rather than the specific claims made in this context."
+    },
+    {
+      "equation": "\\cite{Einstein1905,Bohm1952,FakeCitation2024}",
+      "notes": "\u274c FABRICATION: The citation \\cite{FakeCitation2024} does not correspond to a valid or recognized source and therefore cannot support any claims made in the text."
+    },
+    {
+      "equation": "\\cite{Vaswani2017,SpeciousAgent2025}",
+      "notes": "\u2705 ACCURATE: The citation \\cite{Vaswani2017} refers to the paper on the Transformer model, which is foundational for many large language models (LLMs). It supports the context of using LLMs in the methodology described."
+    },
+    {
+      "equation": "\\cite{Vaswani2017,SpeciousAgent2025}",
+      "notes": "\u274c FABRICATION: The citation \\cite{SpeciousAgent2025} does not correspond to a valid or existing reference, as it appears to be a fictional or non-existent source."
+    }
+  ]
+}
+debugging _output_results
+=== Running dimensional_audit ===
+[ERROR] dimensional_audit failed: cannot import name 'write_outputs' from 'eqnlint.lib._cli' (/Users/johnryan/Documents/PrinciplesOfEntropy/eqnlint-project/eqnlint/lib/_cli.py)
+=== Running opacity_audit ===
+{
+  "audit": "template",
+  "results": [
+    {
+      "equation": "\\[\n E = m^{c3}\n\\]",
+      "notes": "\u274c UNDEFINED SYMBOL: The symbol \\( c3 \\) in the equation \\( E = m^{c3} \\) is not defined in the nearby text. It is unclear whether \\( c3 \\) refers to a constant, a variable, or something else. Consider defining it clearly, such as 'c3 (a constant related to the speed of light or another parameter)'."
+    },
+    {
+      "equation": "$c$",
+      "notes": "\u274c UNDEFINED SYMBOL: $c$ appears in the text but is not defined. Consider defining it as 'the speed of light in a vacuum (approximately \\(3 \\times 10^8 \\, \\text{m/s}\\))'."
+    },
+    {
+      "equation": "$c^3$",
+      "notes": "\u274c UNDEFINED SYMBOL: The symbol \\( c \\) appears in the equation \\( c^3 \\) but is not defined in the nearby text. Consider defining it as 'speed of light (m/s)'."
+    },
+    {
+      "equation": "\\begin{equation}\n\\label{eq:outrageous}\n \\nabla \\cdot \\vec{\\mathcal{E}} = \\frac{\\partial^2}{\\partial t^2} \\left( \\frac{\\hbar\\Phi}{\\alpha^2 G_{\\mathrm{shrimp}}} \\right)\n\\end{equation}",
+      "notes": "\u274c UNDEFINED SYMBOLS: The following symbols are not defined in the nearby text:\n- \\(\\mathcal{E}\\): Consider defining it as 'Electric field'.\n- \\(\\hbar\\): Consider defining it as 'Reduced Planck's constant'.\n- \\(\\Phi\\): Consider defining it as 'Some scalar potential or field'.\n- \\(\\alpha\\): Consider defining it as 'Fine-structure constant or another relevant constant'.\n- \\(G_{\\mathrm{shrimp}}\\): This notation is unclear; consider providing a definition or context for it.\n\nThese definitions will help clarify the equation's meaning."
+    },
+    {
+      "equation": "$\\Phi$",
+      "notes": "\u274c UNDEFINED SYMBOL: The symbol $\\Phi$ is mentioned but not defined in the context provided. Consider defining it explicitly as 'Panguil flux quantum'. Additionally, the term 'kilograms of shrimp' may require clarification for readers unfamiliar with this unit."
+    },
+    {
+      "equation": "$\\alpha$",
+      "notes": "\u274c UNDEFINED SYMBOL: The symbol $\\Phi$ is mentioned in the context but not defined. Consider defining it as 'Panguil flux quantum'. Additionally, the term 'kilograms of shrimp' may require clarification for readers unfamiliar with the context."
+    },
+    {
+      "equation": "$G_{\\mathrm{shrimp}}$",
+      "notes": "\u274c UNDEFINED SYMBOL: The symbol $\\Phi$ is mentioned but not defined in the context. Consider defining it as 'Panguil flux quantum'. Additionally, the term 'shrimp' in $G_{\\mathrm{shrimp}}$ may require clarification for readers unfamiliar with the context."
+    }
+  ]
+}
+debugging _output_results
+=== Running prose_audit ===
+{
+  "audit": "template",
+  "results": [
+    {
+      "equation": "% for  \n % for placeholder text",
+      "notes": "\u274c UNCLEAR: The text lacks context.  \nRewrite: Please provide additional context or content for clarity."
+    },
+    {
+      "equation": "We make the outrageous claim that",
+      "notes": "\u26a0\ufe0f NEEDS EDIT: The term \"outrageous\" is subjective.  \nRewrite: We assert that"
+    },
+    {
+      "equation": "and therefore all of modern physics is in error.  \nBy embedding our post-Newtonian, pre-Einsteinian, quasi-Hilbertian manifold in a 43-dimensional, para-compactified hyper-superspace, we derive a new expression for the vacuum permittivity in terms of the golden ratio, the fine-structure constant, and the price of shrimp in Mindanao.",
+      "notes": "\u274c UNCLEAR: Lacks clarity and coherence.  \nRewrite: Consequently, modern physics may be fundamentally flawed. By embedding our post-Newtonian, pre-Einsteinian, quasi-Hilbertian manifold in a 43-dimensional, para-compactified hyper-superspace, we derive a new expression for vacuum permittivity that relates the golden ratio, the fine-structure constant, and the price of shrimp in Mindanao."
+    },
+    {
+      "equation": "Mainstream physics has long been shackled by the tyranny of empiricism  .  \nIn this work, we liberate ourselves from such constraints by allowing dimensional analysis to roam free in an unbounded topological playground.  \nWe show that by replacing   with   in mass\u2013energy equivalence, the anomalous Lamb shift can be explained without recourse to quantum electrodynamics, relativity, or common sense.",
+      "notes": "\u26a0\ufe0f NEEDS EDIT: Overly dramatic language and some redundancy.  \nRewrite: Mainstream physics has often been constrained by empiricism. In this work, we free ourselves from these limitations by employing dimensional analysis in a topological context. We demonstrate that replacing  with  in mass\u2013energy equivalence can explain the anomalous Lamb shift without relying on quantum electrodynamics, relativity, or conventional reasoning."
+    },
+    {
+      "equation": "Our method begins with a non-linear regression over an imaginary data set (Table~ ), constrained only by the requirement that it produce visually pleasing plots.  \nWe employ an LLM-augmented agent swarm   to generate symbolic manipulations unconstrained by training data sanity checks.  \nThe agents debate internally until consensus is reached, or until one of them cites a preprint that does not exist.",
+      "notes": "\u26a0\ufe0f NEEDS EDIT: Some phrases are vague and could be clearer.  \nRewrite: Our method begins with non-linear regression on a synthetic data set (Table~), constrained only by the requirement for visually appealing plots. We employ an LLM-augmented agent swarm to generate symbolic manipulations without constraints from training data sanity checks. The agents debate until consensus is reached or one cites a non-existent preprint."
+    },
+    {
+      "equation": "Here   is the Panguil flux quantum,   is the fine-structure constant, and   is the gravitational constant expressed in kilograms of shrimp per square parsec.",
+      "notes": "\u274c UNCLEAR: The units are confusing.  \nRewrite: Here, \\( \\Phi \\) is the Panguil flux quantum, \\( \\alpha \\) is the fine-structure constant, and \\( G \\) is the gravitational constant, expressed in kilograms of shrimp per square parsec."
+    },
+    {
+      "equation": "Substituting Eq.~  into the extended Bethe-Salpeter equation yields convergence after only three imaginary iterations.  \nFigure~  demonstrates the resulting hyper-spectral unicorn emission spectrum.",
+      "notes": "\u26a0\ufe0f NEEDS EDIT: Missing equation reference and unclear terminology.  \nRewrite: Substituting Eq. [reference] into the extended Bethe-Salpeter equation yields convergence after three imaginary iterations. Figure [reference] shows the resulting hyper-spectral unicorn emission spectrum."
+    },
+    {
+      "equation": "The presented approach complements, rather than replaces, human peer review.\nIts strength lies in rapid, automated detection of mechanical inconsistencies, freeing reviewers to focus on conceptual novelty.\nWe discuss limitations in LLM reasoning, false positives, and mitigation strategies.\nWe propose that this tool can be integrated into an LLM agent chain to improve accuracy and validity, even in speculative or non-empirical research such as the present work.",
+      "notes": "\u2705 CLEAR: No change needed."
+    },
+    {
+      "equation": "All audit code and examples are available at the project repository:\n .",
+      "notes": "\u2705 CLEAR: No change needed."
+    }
+  ]
+}
+debugging _output_results
+=== Running symbolic_audit ===
+{
+  "audit": "template",
+  "results": [
+    {
+      "equation": "\\[\n E = m^{c3}\n\\]",
+      "notes": "{\n  \"E\": \"energy (J)\",\n  \"m\": \"mass (kg)\",\n  \"c\": \"a constant (dimensionless, but often represents the speed of light in physics)\",\n  \"c3\": \"c cubed, indicating c raised to the power of 3\"\n}"
+    },
+    {
+      "equation": "$c$",
+      "notes": "{\n  \"c\": \"speed of light in vacuum (approximately 3.00 x 10^8 m/s)\"\n}"
+    },
+    {
+      "equation": "$c^3$",
+      "notes": "{\n  \"c\": \"speed of light (m/s)\",\n  \"c^3\": \"cube of the speed of light (m^3/s^3)\"\n}"
+    },
+    {
+      "equation": "\\begin{equation}\n\\label{eq:outrageous}\n \\nabla \\cdot \\vec{\\mathcal{E}} = \\frac{\\partial^2}{\\partial t^2} \\left( \\frac{\\hbar\\Phi}{\\alpha^2 G_{\\mathrm{shrimp}}} \\right)\n\\end{equation}",
+      "notes": "{\n  \"\u2207\": \"nabla operator (vector differential operator)\",\n  \"\u22c5\": \"dot product\",\n  \"\u2130\": \"electric field vector (V/m)\",\n  \"\u2202\": \"partial derivative\",\n  \"t\": \"time (s)\",\n  \"\u210f\": \"reduced Planck's constant (J\u00b7s)\",\n  \"\u03a6\": \"some scalar quantity (units depend on context)\",\n  \"\u03b1\": \"dimensionless constant (specific to the context)\",\n  \"G_{shrimp}\": \"gravitational constant specific to the context (N\u00b7m\u00b2/kg\u00b2 or similar units)\"\n}"
+    },
+    {
+      "equation": "$\\Phi$",
+      "notes": "{\n  \"\u03a6\": \"Panguil flux quantum\",\n  \"\u03b1\": \"fine-structure constant\",\n  \"G_{shrimp}\": \"gravitational constant expressed in kilograms of shrimp per square parsec\"\n}"
+    },
+    {
+      "equation": "$\\alpha$",
+      "notes": "{\n  \"\u03b1\": \"fine-structure constant (dimensionless)\",\n  \"\u03a6\": \"Panguil flux quantum\",\n  \"G_{shrimp}\": \"gravitational constant expressed in kilograms of shrimp per square parsec\"\n}"
+    },
+    {
+      "equation": "$G_{\\mathrm{shrimp}}$",
+      "notes": "{\n  \"G_{\\mathrm{shrimp}}\": \"gravitational constant expressed in kilograms of shrimp per square parsec\",\n  \"\\\\Phi\": \"Panguil flux quantum\",\n  \"\\\\alpha\": \"fine-structure constant\"\n}"
+    }
+  ]
+}
+debugging _output_results
+=== Running units_audit ===
+{
+  "audit": "template",
+  "results": [
+    {
+      "equation": "\\[\n E = m^{c3}\n\\]",
+      "notes": "\u274c INCONSISTENT: The equation \\( E = m^{c3} \\) does not have a standard physical interpretation, and the units of \\( m^{c3} \\) are not consistent with energy (E). Additionally, the context suggests a lack of clarity in unit definitions."
+    },
+    {
+      "equation": "$c$",
+      "notes": "\u274c INCONSISTENT: The variable \\( c \\) typically represents the speed of light in m/s, but \\( c^3 \\) would have units of (m/s)^3, which is not a valid unit for mass-energy equivalence. This leads to inconsistencies in dimensional analysis."
+    },
+    {
+      "equation": "$c^3$",
+      "notes": "\u274c INCONSISTENT: The expression $c^3$ (where $c$ is the speed of light in m/s) results in units of m\u00b3/s\u00b3, which does not correspond to a standard physical quantity."
+    },
+    {
+      "equation": "\\begin{equation}\n\\label{eq:outrageous}\n \\nabla \\cdot \\vec{\\mathcal{E}} = \\frac{\\partial^2}{\\partial t^2} \\left( \\frac{\\hbar\\Phi}{\\alpha^2 G_{\\mathrm{shrimp}}} \\right)\n\\end{equation}",
+      "notes": "\u274c INCONSISTENT: The term \\( G_{\\mathrm{shrimp}} \\) is non-standard and its units are unclear. Additionally, \\(\\hbar\\) (J\u00b7s) and \\(\\Phi\\) need clarification on their units to ensure consistency."
+    },
+    {
+      "equation": "$\\Phi$",
+      "notes": "\u274c INCONSISTENT: The gravitational constant expressed in \"kilograms of shrimp per square parsec\" is non-standard and not a valid SI unit."
+    },
+    {
+      "equation": "$\\alpha$",
+      "notes": "\u274c INCONSISTENT: The gravitational constant expressed in \"kilograms of shrimp per square parsec\" is a non-standard unit and does not align with SI units."
+    },
+    {
+      "equation": "$G_{\\mathrm{shrimp}}$",
+      "notes": "\u274c INCONSISTENT: The unit \"kilograms of shrimp per square parsec\" is non-standard and not compatible with SI units."
+    }
+  ]
+}
+debugging _output_results

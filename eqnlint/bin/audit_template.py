@@ -74,34 +74,29 @@ class AuditStateMachine:
         self.error = None
 
     async def run(self) -> None:
-        while self.state != State.SHUTDOWN:
-            try:
-                await self.transition()
-            except KeyboardInterrupt:
-                if self.log:
-                    self.log.info("Interrupted by user. Shutting down.")
-                else:
-                    print("Interrupted by user. Shutting down.")
-                self.state = State.SHUTDOWN
-            except Exception as e:
-                self.error = e
-                # If you have a HANDLE_ERROR branch in transition(), do this:
-                self.state = State.HANDLE_ERROR
-                # Or, if not handling errors specially, just:
-                # self.state = State.SHUTDOWN
-                
-    async def run(self) -> None:
-        while self.state != State.SHUTDOWN:
-            try:
-                await self.transition()
-            except Exception as e:
-                self.state = State.HANDLE_ERROR
-                self.error = e
-            except KeyboardInterrupt:
-                self.log.info("Interrupted by user. Shutting down.")
-                self.state = State.SHUTDOWN
-            
-    
+        try:
+            while self.state != State.SHUTDOWN:
+                try:
+                    await self.transition()
+                except KeyboardInterrupt:
+                    if self.log:
+                        self.log.info("Interrupted by user. Shutting down.")
+                    self.state = State.SHUTDOWN
+                except asyncio.CancelledError:
+                    self.state = State.SHUTDOWN
+                    raise
+                except Exception as e:
+                    self.state = State.HANDLE_ERROR
+                    self.error = e
+        finally:
+            if getattr(self, "ai_client", None):
+                try:
+                    # Close before loop ends
+                    await self.ai_client.aclose()
+                except RuntimeError as re:
+                    if "Event loop is closed" not in str(re):
+                        raise
+
     def _build_prompt(self, eq: dict) -> str:
         """
         Default prompt — override this in subclasses.
